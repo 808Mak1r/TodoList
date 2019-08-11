@@ -23,7 +23,7 @@ class App extends Component<any, IAppState> {
     let todos = this.state.todoList.map((item, index) => {
       return (
         <li key={index}>
-          <TodoItem todo={item} />
+          <TodoItem todo={item} onToggle={this.toggle.bind(this)} />
         </li>
       )
     })
@@ -44,6 +44,11 @@ class App extends Component<any, IAppState> {
         </ol>
       </div>
     )
+  }
+
+  toggle(e: any, todo: any) {
+    todo.status = todo.status === 'completed' ? '' : 'completed'
+    this.setState(this.state)
   }
 
   changeTitle(event: any) {
