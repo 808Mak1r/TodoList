@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import TodoInput from './components/TodoInput'
+import TodoItem from './components/TodoItem'
 import './App.css';
 
 interface IAppState {
   newTodo: string,
-  todoList: [{ id: number, title: string }]
+  todoList: [{ id: number, title: string }, { id: number, title: string }]
 }
 
 class App extends Component<any, IAppState> {
@@ -13,13 +14,18 @@ class App extends Component<any, IAppState> {
     this.state = {
       newTodo: 'test',
       todoList: [
-        { id: 1, title: '第一个待办' }
+        { id: 1, title: '第一个待办' },
+        { id: 2, title: '第二个待办' }
       ]
     }
   }
   render() {
     let todos = this.state.todoList.map((item, index) => {
-      return <li>{item.title}</li>
+      return (
+        <li>
+          <TodoItem todo={item} />
+        </li>
+      )
     })
     return (
       <div className="App">
