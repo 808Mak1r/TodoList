@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import TodoInput from './components/TodoInput'
 import TodoItem from './components/TodoItem'
-import './App.css';
+import 'normalize.css'
+import './reset.css'
+import './App.css'
 
 interface IAppState {
   newTodo: string,
