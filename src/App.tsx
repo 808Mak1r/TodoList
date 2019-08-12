@@ -53,16 +53,18 @@ class App extends Component<any, IAppState> {
     )
   }
 
+  componentDidUpdate() {
+    localStorage.save('todoList', this.state.todoList)
+  }
+
   toggle(e: any, todo: any) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
-    localStorage.save('todoList', this.state.todoList)
   }
 
   delete(event: any, todo: any) {
     todo.delete = true
     this.setState(this.state)
-    localStorage.save('todoList', this.state.todoList)
   }
 
   changeTitle(event: any) {
@@ -70,7 +72,6 @@ class App extends Component<any, IAppState> {
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
-    localStorage.save('todoList', this.state.todoList)
   }
 
   addTodo(event: any) {
@@ -84,7 +85,6 @@ class App extends Component<any, IAppState> {
       newTodo: '',
       todoList: this.state.todoList
     })
-    localStorage.save('todoList', this.state.todoList)
   }
 }
 
