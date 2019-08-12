@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import './TodoInput.scss'
 
 interface ITodoInputProps {
   content: string,
@@ -8,7 +9,9 @@ interface ITodoInputProps {
 
 export default class TodoInput extends Component<ITodoInputProps> {
   render() {
-    return <input type="text"
+    return <input
+      className="TodoInput"
+      type="text"
       value={this.props.content}
       onChange={this.changeTitle.bind(this)}
       onKeyPress={this.submit.bind(this)} />
