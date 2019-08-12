@@ -5,7 +5,8 @@ interface ITodoItemProps {
     title: string,
     status: string
   },
-  onToggle: (e: any, todo: any) => void
+  onToggle: (e: any, todo: any) => void,
+  onDelete: (e: any, todo: any) => void
 }
 
 export default class TodoItem extends Component<ITodoItemProps> {
@@ -17,11 +18,16 @@ export default class TodoItem extends Component<ITodoItemProps> {
           onChange={this.toggle.bind(this)}
         />
         {this.props.todo.title}
+        <button onClick={this.delete.bind(this)}>删除</button>
       </div>
     )
   }
 
   toggle(e: any) {
     this.props.onToggle(e, this.props.todo)
+  }
+
+  delete(e: any) {
+    this.props.onDelete(e, this.props.todo)
   }
 }
