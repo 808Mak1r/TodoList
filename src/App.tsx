@@ -3,7 +3,7 @@ import TodoInput from './components/TodoInput'
 import TodoItem from './components/TodoItem'
 import 'normalize.css'
 import './reset.css'
-import './App.css'
+import './App.scss'
 
 
 interface IAppState {
@@ -45,7 +45,7 @@ class App extends Component<any, IAppState> {
             onSubmit={this.addTodo.bind(this)}
           />
         </div>
-        <ol>
+        <ol className="todoList">
           {todos}
         </ol>
       </div>

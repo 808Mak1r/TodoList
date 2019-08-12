@@ -8,4 +8,12 @@
   min-height: 20em;
   min-width: 32em;
   box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.15);
+
+  .todoList>li:nth-child(odd) {
+    background: #eee;
+  }
+
+  .todoList>li:nth-child(even) {
+    background: transparent;
+  }
 }
