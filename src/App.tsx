@@ -20,13 +20,19 @@ class App extends Component<any, IAppState> {
     }
   }
   render() {
-    let todos = this.state.todoList.map((item, index) => {
-      return (
-        <li key={index}>
-          <TodoItem todo={item} onToggle={this.toggle.bind(this)} />
-        </li>
-      )
-    })
+    let todos = this.state.todoList
+      .filter((item) => !item.deleted)
+      .map((item, index) => {
+        return (
+          <li key={index}>
+            <TodoItem
+              todo={item}
+              onToggle={this.toggle.bind(this)}
+              onDelete={this.delete.bind(this)}
+            />
+          </li>
+        )
+      })
 
 
     return (
@@ -48,6 +54,11 @@ class App extends Component<any, IAppState> {
 
   toggle(e: any, todo: any) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
+    this.setState(this.state)
+  }
+
+  delete(event: any, todo: any) {
+    todo.delete = true
     this.setState(this.state)
   }
 
