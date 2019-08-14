@@ -1,13 +1,14 @@
-import * as localStorage from './localStorage'
 import React, { Component } from 'react'
-import TodoInput from './components/TodoInput'
-import TodoItem from './components/TodoItem'
+import TodoInput from './components/Todos/TodoInput'
+import TodoItem from './components/Todos/TodoItem'
+import UserDialog from './components/UserDialog'
 import 'normalize.css'
 import './reset.css'
 import './App.scss'
 
 
 interface IAppState {
+  user: any,
   newTodo: string,
   todoList: any[]
 }
@@ -16,8 +17,9 @@ class App extends Component<any, IAppState> {
   constructor(props: any) {
     super(props)
     this.state = {
+      user: {},
       newTodo: '',
-      todoList: localStorage.load('todoList') || []
+      todoList: []
     }
   }
   render() {
@@ -38,7 +40,7 @@ class App extends Component<any, IAppState> {
 
     return (
       <div className="App">
-        <h1>我的待办</h1>
+        <h1>{this.state.user.username || '我'}的待办</h1>
         <div className="inputWrapper">
           <TodoInput
             content={this.state.newTodo}
@@ -49,12 +51,20 @@ class App extends Component<any, IAppState> {
         <ol className="todoList">
           {todos}
         </ol>
+        {this.state.user.id ? null : <UserDialog onSignUp={this.onSignUp.bind(this)} />}
       </div>
     )
   }
 
+  onSignUp(user: any) {
+    //消除「不要直接修改 state」的警告
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = user
+    this.setState(stateCopy)
+  }
+
   componentDidUpdate() {
-    localStorage.save('todoList', this.state.todoList)
+
   }
 
   toggle(e: any, todo: any) {
