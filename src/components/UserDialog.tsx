@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signUp } from '../config/leanCloud'
+import { signUp, signIn } from '../config/leanCloud'
 import './UserDialog.scss'
 
 
@@ -37,11 +37,57 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
       this.props.onSignUp.call(null, user)
     }
     let error = (error: any) => {
-      console.log(error)
+      switch (error.code) {
+        case 202:
+          alert('用户名已被占用')
+          break
+        case 203:
+          alert('电子邮箱地址已经被占用')
+          break
+        case 204:
+          alert('没有提供电子邮箱地址')
+          break
+        case 502:
+          alert('服务器维护中')
+          break
+        default:
+          alert(error)
+          break
+      }
     }
     signUp(username, password, success, error)
   }
-  signIn(e: any) { }
+
+
+  signIn(e: any) {
+    e.preventDefault()
+    let { username, password } = this.state.formData
+    let success = (user: any) => {
+      this.props.onSignIn.call(null, user)
+    }
+    let error = (error: any) => {
+      switch (error.code) {
+        case 205:
+          alert('找不到电子邮箱地址对应的用户')
+          break
+        case 210:
+          alert('用户名与密码不匹配')
+          break
+        case 211:
+          alert('找不到用户')
+          break
+        case 502:
+          alert('服务器维护中')
+          break
+        default:
+          alert(error)
+          break
+      }
+    }
+    signIn(username, password, success, error)
+  }
+
+
   changeFormDate(key: any, e: any) {
     // this.state.formData.username = e.target.value
     // this.setState(this.state)
