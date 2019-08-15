@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import TodoInput from './components/Todos/TodoInput'
 import TodoItem from './components/Todos/TodoItem'
 import UserDialog from './components/UserDialog'
+import { signOut } from './config/leanCloud'
 import 'normalize.css'
 import './reset.css'
 import './App.scss'
+
 
 
 interface IAppState {
@@ -12,6 +14,7 @@ interface IAppState {
   newTodo: string,
   todoList: any[]
 }
+
 
 class App extends Component<any, IAppState> {
   constructor(props: any) {
@@ -40,7 +43,9 @@ class App extends Component<any, IAppState> {
 
     return (
       <div className="App">
-        <h1>{this.state.user.username || '我'}的待办</h1>
+        <h1>{this.state.user.username || '我'}的待办
+          {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
+        </h1>
         <div className="inputWrapper">
           <TodoInput
             content={this.state.newTodo}
@@ -51,12 +56,23 @@ class App extends Component<any, IAppState> {
         <ol className="todoList">
           {todos}
         </ol>
-        {this.state.user.id ? null : <UserDialog onSignUp={this.onSignUp.bind(this)} />}
+        {this.state.user.id ?
+          null :
+          <UserDialog
+            onSignUp={this.onSignUpOrSignIn.bind(this)}
+            onSignIn={this.onSignUpOrSignIn.bind(this)} />}
       </div>
     )
   }
 
-  onSignUp(user: any) {
+  signOut() {
+    signOut()
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = {}
+    this.setState(stateCopy)
+  }
+
+  onSignUpOrSignIn(user: any) {
     //消除「不要直接修改 state」的警告
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.user = user
