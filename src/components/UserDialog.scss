@@ -43,7 +43,18 @@
 
       .actions {
         padding-left: 4em;
+        display: flex;
+        align-items: center;
+
+        button {
+          margin-right: .5em;
+        }
       }
+    }
+
+    button {
+      font: inherit;
+      padding: .2em;
     }
   }
 }
