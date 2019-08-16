@@ -7,6 +7,7 @@ import './UserDialog.scss'
 interface IUserDialogProps {
   selected: string,
   formData: {
+    email: string,
     username: string,
     password: string
   }
@@ -18,6 +19,7 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
     this.state = {
       selected: 'signUp',
       formData: {
+        email: '',
         username: '',
         password: ''
       }
@@ -32,7 +34,7 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
 
   signUp(e: any) {
     e.preventDefault()
-    let { username, password } = this.state.formData
+    let { email, username, password } = this.state.formData
     let success = (user: any) => {
       this.props.onSignUp.call(null, user)
     }
@@ -55,7 +57,7 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
           break
       }
     }
-    signUp(username, password, success, error)
+    signUp(email, username, password, success, error)
   }
 
 
@@ -101,6 +103,13 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
     let signUpForm = (
       <form className="signUp" onSubmit={this.signUp.bind(this)}> {/* 注册*/}
         <div className="row">
+          <label>邮箱</label>
+          <input type="text"
+            value={this.state.formData.email}
+            onChange={this.changeFormDate.bind(this, 'email')}
+          />
+        </div>
+        <div className="row">
           <label>用户名</label>
           <input type="text"
             value={this.state.formData.username}
@@ -137,6 +146,7 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
         </div>
         <div className="row actions">
           <button type="submit">登录</button>
+          <a herf="javascript:;">忘记密码了？</a>
         </div>
       </form>
     )
