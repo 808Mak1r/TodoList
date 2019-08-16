@@ -39,11 +39,17 @@ export function signIn(username: string, password: string, successFn: { (user: a
   })
 }
 
-
-
 export function signOut() {
   AV.User.logOut()
   return undefined
+}
+
+export function sendPasswordResetEmail(email: string, successFn: { call: () => void; }, errorFn: { (error: any): void; call?: any; }) {
+  AV.User.requestPasswordReset(email).then(function (success) {
+    successFn.call()
+  }, function (error) {
+    errorFn.call(null, error)
+  })
 }
 
 function getUserFromAVUser(AVUser: any) {
