@@ -44,7 +44,7 @@ export function signOut() {
   return undefined
 }
 
-export function sendPasswordResetEmail(email: string, successFn: { call: () => void; }, errorFn: { (error: any): void; call?: any; }) {
+export function sendPasswordResetEmail(email: string, successFn: { (user: any): void; call?: any; }, errorFn: { (error: any): void; call?: any; }) {
   AV.User.requestPasswordReset(email).then(function (success) {
     successFn.call()
   }, function (error) {
