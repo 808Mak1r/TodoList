@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
-export default class ForgotPasswordForm extends Component {
+interface IForgotPasswordFormProps {
+  onSubmit: any,
+  formData: any,
+  onChange: any,
+  onSignIn: any
+}
+
+export default class ForgotPasswordForm extends Component<IForgotPasswordFormProps> {
   render() {
     return (
       <div className="forgotPassword">
