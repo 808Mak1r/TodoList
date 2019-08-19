@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function (props: any) {
+
+export default function (this: any, props: any) {
   return (
     <form className="signUp" onSubmit={props.onSubmit.bind(this)}> {/* 注册*/}
       <div className="row">

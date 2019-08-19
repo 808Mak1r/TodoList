@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import SignUpForm from './SignUpForm'
-import SignInForm from './SignInForm'
+import SignUpForm from '../SignUpForm/SignUpForm'
+import SignInForm from '../SignInForm/SignInForm'
 
-export default class SignInOrSignUp extends Component {
-  constructor(props) {
+interface ISignInOrSignUpProps {
+  formData: {
+    email: string,
+    username: string,
+    password: string
+  },
+  onSignUp: any,
+  onChange: any,
+  onSignIn: any,
+  onForgotPassword: any
+}
+interface ISignInOrSignUpState {
+  selected: string,
+}
+
+
+export default class SignInOrSignUp extends Component<ISignInOrSignUpProps, ISignInOrSignUpState> {
+  constructor(props: any) {
     super(props)
     this.state = {
       selected: 'signUp'
     }
   }
 
-  switch(e) {
+  switch(e: any) {
     this.setState({
       selected: e.target.value
     })
