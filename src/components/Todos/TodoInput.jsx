@@ -2,7 +2,7 @@ import React from 'react'
 import './TodoInput.scss'
 
 
-function submit(props: any, e: any) {
+function submit(props, e) {
   if (e.key === 'Enter') {
     if (e.target.value.trim() !== '') {
       props.onSubmit(e)
@@ -11,11 +11,11 @@ function submit(props: any, e: any) {
 }
 
 
-function changeTitle(props: any, e: any) {
+function changeTitle(props, e) {
   props.onChange(e)
 }
 
-export default function (props: any) {
+export default function (props) {
   return <input type="text" value={props.content}
     className="TodoInput"
     onChange={changeTitle.bind(null, props)}

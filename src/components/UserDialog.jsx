@@ -4,19 +4,8 @@ import ForgotPasswordForm from './ForgotPasswordForm/ForgotPasswordForm'
 import SignInOrSignUp from './SignInOrSignUp/SignInOrSignUp'
 import './UserDialog.scss'
 
-
-
-interface IUserDialogProps {
-  selectedTab: string,
-  formData: {
-    email: string,
-    username: string,
-    password: string
-  }
-}
-
-export default class UserDialog extends Component<any, IUserDialogProps>{
-  constructor(props: any) {
+export default class UserDialog extends Component {
+  constructor(props) {
     super(props)
     this.state = {
       selectedTab: 'signInOrSignUp', //'forgotPassword'
@@ -28,13 +17,13 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
     }
   }
 
-  signUp(e: any) {
+  signUp(e) {
     e.preventDefault()
     let { email, username, password } = this.state.formData
-    let success = (user: any) => {
+    let success = (user) => {
       this.props.onSignUp.call(null, user)
     }
-    let error = (error: any) => {
+    let error = (error) => {
       switch (error.code) {
         case 202:
           alert('用户名已被占用')
@@ -57,13 +46,14 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
   }
 
 
-  signIn(e: any) {
+  signIn(e) {
     e.preventDefault()
     let { username, password } = this.state.formData
-    let success = (user: any) => {
+    let success = (user) => {
       this.props.onSignIn.call(null, user)
+      this.props.todoInit.call(null)
     }
-    let error = (error: any) => {
+    let error = (error) => {
       switch (error.code) {
         case 205:
           alert('找不到电子邮箱地址对应的用户')
@@ -86,13 +76,28 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
   }
 
 
-  changeFormData(key: any, e: any) {
+  changeFormData(key, e) {
     // this.state.formData.username = e.target.value
     // this.setState(this.state)
     // 像上面这样写会看到一个警告 warning  Do not mutate state directly. Use setState()
     let stateCopy = JSON.parse(JSON.stringify(this.state))  // 用 JSON 深拷贝
     stateCopy.formData[key] = e.target.value
     this.setState(stateCopy)
+  }
+
+  showForgotPassword() {
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.selectedTeb = 'forgotPassword'
+    this.setState(stateCopy)
+  }
+  returnToSignIn() {
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.selectedTeb = 'signInOrSignUp'
+    this.setState(stateCopy)
+  }
+  resetPassword(e) {
+    e.preventDefault()
+    sendPasswordResetEmail(this.state.formData.email, null, null)
   }
 
   render() {
@@ -118,20 +123,5 @@ export default class UserDialog extends Component<any, IUserDialogProps>{
         </div>
       </div>
     )
-  }
-  showForgotPassword() {
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
-    stateCopy.selectedTab = 'forgotPassword'
-    this.setState(stateCopy)
-  }
-
-  returnToSignIn() {
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
-    stateCopy.selectedTab = 'signInOrSignUp'
-    this.setState(stateCopy)
-  }
-
-  resetPassword() {
-    sendPasswordResetEmail(this.state.formData.email, null, null)
   }
 }
