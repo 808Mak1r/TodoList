@@ -16,25 +16,20 @@ class App extends Component {
       newTodo: '',
       todoList: []
     }
-
     this.initTodoGetByUser()
-
   }
   render() {
+
     let todos = this.state.todoList
       .filter((item) => !item.deleted)
       .map((item, index) => {
         return (
-          <li key={index}>
-            <TodoItem
-              todo={item}
-              onToggle={this.toggle.bind(this)}
-              onDelete={this.delete.bind(this)}
-            />
+          <li key={index} >
+            <TodoItem todo={item} onToggle={this.toggle.bind(this)}
+              onDelete={this.delete.bind(this)} />
           </li>
         )
       })
-
 
     return (
       <div className="App">
@@ -42,11 +37,9 @@ class App extends Component {
           {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
         </h1>
         <div className="inputWrapper">
-          <TodoInput
-            content={this.state.newTodo}
+          <TodoInput content={this.state.newTodo}
             onChange={this.changeTitle.bind(this)}
-            onSubmit={this.addTodo.bind(this)}
-          />
+            onSubmit={this.addTodo.bind(this)} />
         </div>
         <ol className="todoList">
           {todos}
@@ -61,6 +54,7 @@ class App extends Component {
     )
   }
 
+
   signOut() {
     signOut()
     let stateCopy = JSON.parse(JSON.stringify(this.state))
@@ -69,14 +63,12 @@ class App extends Component {
   }
 
   onSignUpOrSignIn(user) {
-    //消除「不要直接修改 state」的警告
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.user = user
     this.setState(stateCopy)
   }
 
   componentDidUpdate() {
-
   }
 
   initTodoGetByUser() {
@@ -86,7 +78,7 @@ class App extends Component {
         let stateCopy = JSON.parse(JSON.stringify(this.state))
         stateCopy.todoList = todos
         this.setState(stateCopy)
-      }, null)
+      })
     }
   }
 
@@ -112,8 +104,7 @@ class App extends Component {
     let newTodo = {
       title: event.target.value,
       status: '',
-      deleted: false,
-      id: ''
+      deleted: false
     }
     TodoModel.create(newTodo, (id) => {
       newTodo.id = id
@@ -126,11 +117,12 @@ class App extends Component {
       console.log(error)
     })
   }
+
   delete(event, todo) {
     TodoModel.destroy(todo.id, () => {
-      todo.delete = true
+      todo.deleted = true
       this.setState(this.state)
-    }, null)
+    })
   }
 }
 
