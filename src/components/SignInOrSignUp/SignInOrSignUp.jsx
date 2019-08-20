@@ -2,31 +2,16 @@ import React, { Component } from 'react';
 import SignUpForm from '../SignUpForm/SignUpForm'
 import SignInForm from '../SignInForm/SignInForm'
 
-interface ISignInOrSignUpProps {
-  formData: {
-    email: string,
-    username: string,
-    password: string
-  },
-  onSignUp: any,
-  onChange: any,
-  onSignIn: any,
-  onForgotPassword: any
-}
-interface ISignInOrSignUpState {
-  selected: string,
-}
 
-
-export default class SignInOrSignUp extends Component<ISignInOrSignUpProps, ISignInOrSignUpState> {
-  constructor(props: any) {
+export default class SignInOrSignUp extends Component {
+  constructor(props) {
     super(props)
     this.state = {
       selected: 'signUp'
     }
   }
 
-  switch(e: any) {
+  switch(e) {
     this.setState({
       selected: e.target.value
     })

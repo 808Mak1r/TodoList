@@ -1,13 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 
-interface IForgotPasswordFormProps {
-  onSubmit: any,
-  formData: any,
-  onChange: any,
-  onSignIn: any
-}
-
-export default class ForgotPasswordForm extends Component<IForgotPasswordFormProps> {
+export default class ForgotPasswordForm extends Component {
   render() {
     return (
       <div className="forgotPassword">
