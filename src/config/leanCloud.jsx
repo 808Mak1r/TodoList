@@ -1,5 +1,5 @@
 import AV from 'leancloud-storage'
-import { any } from 'prop-types';
+
 
 var APP_ID = 'Cm3g0e6jj5b91eJ8rUVuubGb-MdYXbMMI';
 var APP_KEY = 'Nq82JXJqI3dQw44wjULW12el';
@@ -13,7 +13,7 @@ export default AV
 
 
 export const TodoModel = {
-  getByUser(user: any, successFn: any, errorFn: any) {
+  getByUser(user, successFn, errorFn) {
     // 文档见 https://leancloud.cn/docs/leanstorage_guide-js.html#批量操作
     let query = new AV.Query('Todo')
     query.equalTo('deleted', false);
@@ -26,7 +26,7 @@ export const TodoModel = {
       errorFn && errorFn.call(null, error)
     })
   },
-  create({ status, title, deleted }: { status: any, title: any, deleted: any }, successFn: any, errorFn: any): void {
+  create({ status, title, deleted }, successFn, errorFn) {
     let Todo = AV.Object.extend('Todo')
     let todo = new Todo()
     todo.set('title', title)
@@ -49,7 +49,7 @@ export const TodoModel = {
     })
   },
 
-  update({ id, title, status, deleted }: { id: string, title: any, status: any, deleted: boolean }, successFn: any, errorFn: any) {
+  update({ id, title, status, deleted }, successFn, errorFn) {
     // 文档 https://leancloud.cn/docs/leanstorage_guide-js.html#更新对象
     let todo = AV.Object.createWithoutData('Todo', id)
     title !== undefined && todo.set('title', title)
@@ -60,7 +60,7 @@ export const TodoModel = {
     }, (error) => errorFn && errorFn.call(null, error))
   },
 
-  destroy(todoId: string, successFn: any, errorFn: any) {
+  destroy(todoId, successFn, errorFn) {
     // 文档 https://leancloud.cn/docs/leanstorage_guide-js.html#删除对象
     /*let todo = AV.Object.createWithoutData('Todo', todoId)
     todo.destroy().then(function (response) {
@@ -75,7 +75,7 @@ export const TodoModel = {
 }
 
 
-export function signUp(email: string, username: string, password: string, successFn: { (user: any): void; call?: any; }, errorFn: { (error: any): void; call?: any; }) {
+export function signUp(email, username, password, successFn, errorFn) {
 
   var user = new AV.User()
   // 设置用户名
@@ -95,7 +95,7 @@ export function signUp(email: string, username: string, password: string, succes
 
 }
 
-export function signIn(username: string, password: string, successFn: { (user: any): void; call?: any; }, errorFn: { (error: any): void; call?: any; }) {
+export function signIn(username, password, successFn, errorFn) {
   AV.User.logIn(username, password).then(function (loginedUser) {
     let user = getUserFromAVUser(loginedUser)
     successFn.call(null, user)
@@ -118,7 +118,7 @@ export function getCurrentUser() {
   }
 }
 
-export function sendPasswordResetEmail(email: string, successFn: any, errorFn: any) {
+export function sendPasswordResetEmail(email, successFn, errorFn) {
   AV.User.requestPasswordReset(email).then(function (success) {
     successFn.call()
   }, function (error) {
@@ -126,7 +126,7 @@ export function sendPasswordResetEmail(email: string, successFn: any, errorFn: a
   })
 }
 
-function getUserFromAVUser(AVUser: any) {
+function getUserFromAVUser(AVUser) {
   return {
     id: AVUser.id,
     ...AVUser.attributes

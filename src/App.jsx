@@ -8,29 +8,17 @@ import './reset.css'
 import './App.scss'
 
 
-interface IAppState {
-  user: any,
-  newTodo: string,
-  todoList: any[]
-}
-
-
-class App extends Component<any, IAppState> {
-  constructor(props: any) {
+class App extends Component {
+  constructor(props) {
     super(props)
     this.state = {
-      user: {},
+      user: getCurrentUser() || {},
       newTodo: '',
       todoList: []
     }
-    let user = getCurrentUser()
-    if (user) {
-      TodoModel.getByUser(user, (todos: any) => {
-        let stateCopy = JSON.parse(JSON.stringify(this.state))
-        stateCopy.todoList = todos
-        this.setState(stateCopy)
-      }, null)
-    }
+
+    this.initTodoGetByUser()
+
   }
   render() {
     let todos = this.state.todoList
@@ -67,7 +55,8 @@ class App extends Component<any, IAppState> {
           null :
           <UserDialog
             onSignUp={this.onSignUpOrSignIn.bind(this)}
-            onSignIn={this.onSignUpOrSignIn.bind(this)} />}
+            onSignIn={this.onSignUpOrSignIn.bind(this)}
+            todoInit={this.initTodoGetByUser.bind(this)} />}
       </div>
     )
   }
@@ -79,7 +68,7 @@ class App extends Component<any, IAppState> {
     this.setState(stateCopy)
   }
 
-  onSignUpOrSignIn(user: any) {
+  onSignUpOrSignIn(user) {
     //消除「不要直接修改 state」的警告
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.user = user
@@ -90,43 +79,54 @@ class App extends Component<any, IAppState> {
 
   }
 
-  toggle(e: any, todo: any) {
+  initTodoGetByUser() {
+    let user = getCurrentUser()
+    if (user) {
+      TodoModel.getByUser(user, (todos) => {
+        let stateCopy = JSON.parse(JSON.stringify(this.state))
+        stateCopy.todoList = todos
+        this.setState(stateCopy)
+      }, null)
+    }
+  }
+
+  toggle(e, todo) {
     let oldStatus = todo.status
     todo.status = todo.status === 'completed' ? '' : 'completed'
     TodoModel.update(todo, () => {
       this.setState(this.state)
-    }, (error: any) => {
+    }, (error) => {
       todo.status = oldStatus
       this.setState(this.state)
     })
   }
 
-  changeTitle(event: any) {
+  changeTitle(event) {
     this.setState({
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
   }
 
-  addTodo(event: any) {
+  addTodo(event) {
     let newTodo = {
       title: event.target.value,
       status: '',
       deleted: false,
       id: ''
     }
-    TodoModel.create(newTodo, (id: any) => {
+    TodoModel.create(newTodo, (id) => {
       newTodo.id = id
       this.state.todoList.push(newTodo)
       this.setState({
         newTodo: '',
         todoList: this.state.todoList
       })
-    }, (error: any) => {
+    }, (error) => {
       console.log(error)
     })
   }
-  delete(event: any, todo: any) {
+  delete(event, todo) {
     TodoModel.destroy(todo.id, () => {
       todo.delete = true
       this.setState(this.state)

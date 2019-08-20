@@ -1,16 +1,8 @@
 import React, { Component } from 'react'
 import './TodoItem.scss'
 
-interface ITodoItemProps {
-  todo: {
-    title: string,
-    status: string
-  },
-  onToggle: (e: any, todo: any) => void,
-  onDelete: (e: any, todo: any) => void
-}
 
-export default class TodoItem extends Component<ITodoItemProps> {
+export default class TodoItem extends Component {
   render() {
     return (
       <div className="TodoItem">
@@ -24,11 +16,11 @@ export default class TodoItem extends Component<ITodoItemProps> {
     )
   }
 
-  toggle(e: any) {
+  toggle(e) {
     this.props.onToggle(e, this.props.todo)
   }
 
-  delete(e: any) {
+  delete(e) {
     this.props.onDelete(e, this.props.todo)
   }
 }
