@@ -14,10 +14,12 @@
   .UserDialog {
     border: 1px solid;
     border-radius: 4px;
-    min-width: 20em;
+    width: 400px;
+    height: 250px;
     background: white;
     border: 1px solid #aaa;
     box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.35);
+    padding: 15px;
 
     .signInOrSignUp>nav:first-child {
       padding: 1em;
@@ -52,16 +54,13 @@
         padding-left: 4em;
         display: flex;
         align-items: center;
-
-        button {
-          margin-right: .5em;
-        }
       }
     }
 
-    button {
-      font: inherit;
-      padding: .2em;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 }
