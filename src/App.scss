@@ -16,4 +16,15 @@
   .todoList>li:nth-child(even) {
     background: transparent;
   }
+
+  h1 {
+    position: relative;
+  }
+
+  h1>.ant-btn {
+    position: absolute;
+    display: flex;
+    right: 0;
+    top: 5px;
+  }
 }

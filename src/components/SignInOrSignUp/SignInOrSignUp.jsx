@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import SignUpForm from '../SignUpForm/SignUpForm'
 import SignInForm from '../SignInForm/SignInForm'
+import { Radio } from 'antd'
 
 
 export default class SignInOrSignUp extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: 'signUp'
+      value: 'signUp'
     }
   }
 
   switch(e) {
     this.setState({
-      selected: e.target.value
+      value: e.target.value
     })
   }
 
@@ -21,25 +22,19 @@ export default class SignInOrSignUp extends Component {
     return (
       <div className="signInOrSignUp">
         <nav>
-          <label>
-            <input type="radio" value="signUp"
-              checked={this.state.selected === 'signUp'}
-              onChange={this.switch.bind(this)}
-            /> 注册</label>
-          <label>
-            <input type="radio" value="signIn"
-              checked={this.state.selected === 'signIn'}
-              onChange={this.switch.bind(this)}
-            /> 登录</label>
-        </nav>
+          <Radio.Group onChange={this.switch.bind(this)} value={this.state.value}>
+            <Radio value="signUp">注册</Radio>
+            <Radio value="signIn">登录</Radio>
+          </Radio.Group>
+        </nav >
         <div className="panes">
-          {this.state.selected === 'signUp' ?
+          {this.state.value === 'signUp' ?
             <SignUpForm formData={this.props.formData}
               onSubmit={this.props.onSignUp}
               onChange={this.props.onChange}
             />
             : null}
-          {this.state.selected === 'signIn' ?
+          {this.state.value === 'signIn' ?
             <SignInForm formData={this.props.formData}
               onChange={this.props.onChange}
               onSubmit={this.props.onSignIn}
@@ -47,7 +42,7 @@ export default class SignInOrSignUp extends Component {
             />
             : null}
         </div>
-      </div>
+      </div >
     )
   }
 }
