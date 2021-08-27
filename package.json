@@ -1,7 +1,7 @@
 {
   "name": "todolist",
   "version": "0.1.0",
-  "homepage": "http://QIMengz.github.io/TodoList",
+  "homepage": "http://808Mak1r.github.io/TodoList",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.17",
